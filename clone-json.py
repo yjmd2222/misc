@@ -39,5 +39,3 @@ clones.sort(key=sort_key, reverse=True)
 
 with open('clone.json', 'w', encoding='utf-8') as fh:
     json.dump(latest, fh, ensure_ascii=False, indent=4)
-
-print(latest)
