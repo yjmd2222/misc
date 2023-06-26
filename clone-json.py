@@ -19,9 +19,12 @@ for i in range(len(now['clones'])):
 latest['count'] = sum(map(lambda x: int(x['count']), latest['clones']))
 latest['uniques'] = sum(map(lambda x: int(x['uniques']), latest['clones']))
 
+clones = latest['clones']
+sort_key = lambda x: x['timestamp']
+
 if len(timestamps) > 100:
     remove_this = []
-    clones = latest['clones']
+    clones.sort(key=sort_key)
     for i in range(len(timestamps) - 35):
         clones[i]['timestamp'] = clones[i]['timestamp'][:7] 
         if clones[i]['timestamp'] == clones[i+1]['timestamp'][:7]:
@@ -32,7 +35,7 @@ if len(timestamps) > 100:
     for item in remove_this:
         clones.remove(item)
 
-latest['clones'].reverse()
+clones.sort(key=sort_key, reverse=True)
 
 with open('clone.json', 'w', encoding='utf-8') as fh:
     json.dump(latest, fh, ensure_ascii=False, indent=4)
